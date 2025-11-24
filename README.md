@@ -29,7 +29,7 @@ A Java implementation of the classic Gomoku game (Five in a Row) featuring a com
 4. First to get 5 in a row (horizontally, vertically, or diagonally) wins!
 5. View game history by selecting option 2 from the main menu
 
-## 🏗 Project Structure
+## Project Structure
 ```
 src/main/java/com/gomoku/
 ├── GomokuGame.java         # Main game class and entry point
