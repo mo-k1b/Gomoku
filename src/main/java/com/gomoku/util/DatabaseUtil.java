@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Handles database operations for the Gomoku game.
+ * Handles database operations for the game.
  */
 public class DatabaseUtil {
     private static final String DB_URL = "jdbc:h2:./data/gomoku";

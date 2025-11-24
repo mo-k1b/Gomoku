@@ -3,23 +3,17 @@ package com.gomoku.service;
 import com.gomoku.model.Board;
 import com.gomoku.util.DatabaseUtil;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 /**
  * Service class that manages the core game logic and state for the Gomoku game.
  * 
- * <p>This class is responsible for:
+ * This class is responsible for:
  * <ul>
  *   <li>Managing the game board state</li>
  *   <li>Handling player moves and validating them</li>
  *   <li>Determining game over conditions (win/draw)</li>
  *   <li>Managing game history and persistence</li>
- *   <li>Implementing AI opponent logic</li>
- * </ul></p>
- *
+ *   <li>Implementing computer opponent logic</li>
+ * </ul> *
  * @author Mohammed Ba Dhib
  * @version 1.0
  * @since 2025-11-24
@@ -47,7 +41,7 @@ public class GameService {
         
         if (checkWin(row, col)) {
             gameOver = true;
-            winner = currentPlayer == 'X' ? "Human" : "AI";
+            winner = currentPlayer == 'X' ? "Human" : "Computer";
             DatabaseUtil.saveGameResult(winner, board.getSize(), moveCount);
             return true;
         }
@@ -63,10 +57,10 @@ public class GameService {
         return true;
     }
     
-    public void makeAIMove() {
+    public void makeComputerMove() {
         if (gameOver) return;
         
-        // Simple AI: make a random valid move
+        // make a random valid move
         int size = board.getSize();
         int attempts = 0;
         final int MAX_ATTEMPTS = size * size;
@@ -80,7 +74,7 @@ public class GameService {
                 
                 if (checkWin(row, col)) {
                     gameOver = true;
-                    winner = "AI";
+                    winner = "Computer";
                     DatabaseUtil.saveGameResult(winner, board.getSize(), moveCount);
                 } else if (board.isBoardFull()) {
                     gameOver = true;

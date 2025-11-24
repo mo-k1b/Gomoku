@@ -3,16 +3,16 @@ package com.gomoku.model;
 /**
  * Represents the game board for Gomoku (Five in a Row) game.
  * 
- * <p>This class manages the game board state including:
+ * This class manages the game board state including:
  * <ul>
  *   <li>Initializing and maintaining the game grid</li>
  *   <li>Validating and executing player moves</li>
  *   <li>Checking for win conditions in all directions</li>
  *   <li>Tracking game state (empty cells, full board, etc.)</li>
- * </ul></p>
+ * </ul>
  *
- * <p>The board uses a 2D character array to represent the game state,
- * where empty cells are represented by '\u0000', 'X' for player 1, and 'O' for player 2.</p>
+ * The board uses a 2D character array to represent the game state,
+ * where empty cells are represented by 'X' for player 1, and 'O' for player 2.
  *
  * @author Mohammed Ba Dhib
  * @version 1.0

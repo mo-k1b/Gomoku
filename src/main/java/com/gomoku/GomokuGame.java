@@ -8,16 +8,16 @@ import java.util.Scanner;
 
 /**
  * Gomoku Game - A Java implementation of the classic board game Gomoku (Five in a Row).
- * 
+ *
  * <p>This class serves as the main entry point for the Gomoku game application.
  * It handles the game flow, user input, and displays the game state to the console.</p>
- * 
- * <p><b>Rules of Gomoku:</b>
+ *
+ * <b>Rules of Gomoku:</b>
  * <ul>
- *   <li>Players take turns placing their marks (X for human, O for AI) on a 7x7 grid</li>
+ *   <li>Players take turns placing their marks (X for human, O for Computer) on a 7x7 grid</li>
  *   <li>The first player to get 5 in a row (horizontally, vertically, or diagonally) wins</li>
  *   <li>If the board is full and no player has won, the game is a draw</li>
- * </ul></p>
+ * </ul>
  *
  * @author Mohammed Ba Dhib
  * @version 1.0
@@ -34,21 +34,13 @@ public class GomokuGame {
     }
 
     public void start() {
-        System.out.println("Welcome to Gomoku!");
-        System.out.println("You are X, AI is O. Enter row and column numbers (1-7) to make a move.");
-        
         try (Scanner inputScanner = new Scanner(System.in)) {
             while (true) {
                 printMenu();
                 System.out.print("Select an option: ");
-                
-                if (!inputScanner.hasNextLine()) {
-                    System.out.println("No input available. Exiting...");
-                    break;
-                }
-                
+
                 String input = inputScanner.nextLine().trim().toLowerCase();
-                
+
                 switch (input) {
                     case "1":
                         playGame();
@@ -69,36 +61,35 @@ public class GomokuGame {
     private void playGame() {
         gameService.reset();
         printBoard();
-        
+
         while (!gameService.isGameOver()) {
             if (gameService.getCurrentPlayer() == 'X') {
                 humanTurn();
             } else {
-                System.out.println("AI is thinking...");
-                gameService.makeAIMove();
+                gameService.makeComputerMove();
                 printBoard();
             }
         }
-        
+
         System.out.println("Game Over!");
-        System.out.println("Winner: " + 
-            (gameService.getWinner() != null ? gameService.getWinner() : "It's a draw!"));
+        System.out.println("Winner: " +
+                (gameService.getWinner() != null ? gameService.getWinner() : "It's a draw!"));
     }
 
     private void humanTurn() {
         while (true) {
             System.out.print("Enter row and column (e.g., '3 4'): ");
             String input = scanner.nextLine().trim();
-            
+
             try {
                 String[] parts = input.split("\\s+");
                 if (parts.length != 2) {
                     throw new IllegalArgumentException("Please enter two numbers separated by space.");
                 }
-                
+
                 int row = Integer.parseInt(parts[0]) - 1;
                 int col = Integer.parseInt(parts[1]) - 1;
-                
+
                 if (gameService.makeMove(row, col)) {
                     printBoard();
                     return;
@@ -115,14 +106,14 @@ public class GomokuGame {
 
     private void printBoard() {
         int size = gameService.getBoardSize();
-        
+
         // Print column numbers
         System.out.print("   ");
         for (int i = 1; i <= size; i++) {
             System.out.printf("%2d ", i);
         }
         System.out.println("\n   " + "---".repeat(size));
-        
+
         // Print each row with row numbers and cell contents
         for (int i = 0; i < size; i++) {
             System.out.printf("%2d|", i + 1);
@@ -152,7 +143,6 @@ public class GomokuGame {
         System.out.println("1. New Game");
         System.out.println("2. View Game History");
         System.out.println("3. Exit");
-        System.out.print("Select an option: ");
     }
 
     public static void main(String[] args) {
