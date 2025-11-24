@@ -1,6 +1,6 @@
 # Gomoku Game
 
-A Java implementation of the classic Gomoku game (Five in a Row) featuring a command-line interface and a simple AI opponent.
+A Java implementation of the classic Gomoku game (Five in a Row) featuring a command-line interface and a simple computer (with random moves) opponent.
 
 **Author**: Mohammed Ba Dhib  
 **Version**: 1.0  
