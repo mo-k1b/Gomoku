@@ -6,11 +6,12 @@ import com.gomoku.util.DatabaseUtil;
 import java.util.List;
 import java.util.Scanner;
 
+
 /**
  * Gomoku Game - A Java implementation of the classic board game Gomoku (Five in a Row).
  *
- * <p>This class serves as the main entry point for the Gomoku game application.
- * It handles the game flow, user input, and displays the game state to the console.</p>
+ * This class serves as the main entry point for the Gomoku game application.
+ * It handles the game flow, user input, and displays the game state to the console.
  *
  * <b>Rules of Gomoku:</b>
  * <ul>
@@ -28,11 +29,18 @@ public class GomokuGame {
     private final GameService gameService;
     private final Scanner scanner;
 
+    /**
+     * Constructs a new GomokuGame object, initializing the game service and input scanner.
+     */
     public GomokuGame() {
         this.gameService = new GameService(BOARD_SIZE);
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Starts the Gomoku game menu loop, allowing the user to play, view history, or exit.
+     * Collects user input and responds to their selections.
+     */
     public void start() {
         try (Scanner inputScanner = new Scanner(System.in)) {
             while (true) {
@@ -58,6 +66,10 @@ public class GomokuGame {
         }
     }
 
+    /**
+     * Manages a single session of Gomoku, alternating turns between human and computer until the game ends.
+     * Handles move validation and prints the winner or draw result.
+     */
     private void playGame() {
         gameService.reset();
         printBoard();
@@ -76,6 +88,10 @@ public class GomokuGame {
                 (gameService.getWinner() != null ? gameService.getWinner() : "It's a draw!"));
     }
 
+    /**
+     * Receives and validates human player's move input, allowing retries for invalid entries.
+     * Updates the board after valid moves.
+     */
     private void humanTurn() {
         while (true) {
             System.out.print("Enter row and column (e.g., '3 4'): ");
@@ -104,6 +120,9 @@ public class GomokuGame {
         }
     }
 
+    /**
+     * Displays the current game board on the console, showing row and column numbers and cell contents.
+     */
     private void printBoard() {
         int size = gameService.getBoardSize();
 
@@ -125,6 +144,9 @@ public class GomokuGame {
         System.out.println();
     }
 
+    /**
+     * Prints the saved game history retrieved from the database, or notifies if none found.
+     */
     private void showHistory() {
         System.out.println("\n--- Game History ---");
         List<String> history = DatabaseUtil.getGameHistory();
@@ -138,6 +160,9 @@ public class GomokuGame {
         System.out.println("------------------\n");
     }
 
+    /**
+     * Displays the Gomoku main menu options to the user.
+     */
     private void printMenu() {
         System.out.println("\n--- Gomoku Menu ---");
         System.out.println("1. New Game");
@@ -145,6 +170,10 @@ public class GomokuGame {
         System.out.println("3. Exit");
     }
 
+    /**
+     * Main entry point. Creates and starts a new GomokuGame application.
+     *
+     * */
     public static void main(String[] args) {
         new GomokuGame().start();
     }

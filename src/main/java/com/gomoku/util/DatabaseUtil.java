@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Handles database operations for the game.
+ * Handles database operations for the Gomoku game, including initialization,
+ * saving results, and fetching game history.
  */
 public class DatabaseUtil {
     private static final String DB_URL = "jdbc:h2:./data/gomoku";
@@ -23,6 +24,10 @@ public class DatabaseUtil {
         initializeDatabase();
     }
 
+    /**
+     * Initializes the game database and creates the results table if it doesn't exist.
+     * Called automatically on class load.
+     */
     private static void initializeDatabase() {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
@@ -32,10 +37,23 @@ public class DatabaseUtil {
         }
     }
 
+    /**
+     * Returns a connection to the local H2 game database.
+     *
+     * @return A Connection object to the Gomoku game database.
+     * @throws SQLException If a database access error occurs.
+     */
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, "sa", "");
     }
 
+    /**
+     * Saves the result of a finished game to the database.
+     *
+     * @param winner    The name or mark of the winning player.
+     * @param boardSize The size of the board used in the game.
+     * @param moveCount Total number of moves played in the game.
+     */
     public static void saveGameResult(String winner, int boardSize, int moveCount) {
         String sql = "INSERT INTO game_results (winner, board_size, move_count) VALUES (?, ?, ?)";
         try (Connection conn = getConnection();
@@ -49,6 +67,11 @@ public class DatabaseUtil {
         }
     }
 
+    /**
+     * Retrieves the history of all completed games from the database.
+     *
+     * @return A list of game history entries in human-readable format.
+     */
     public static List<String> getGameHistory() {
         List<String> history = new ArrayList<>();
         String sql = "SELECT winner, board_size, move_count, played_at FROM game_results ORDER BY played_at DESC";
